@@ -2,7 +2,7 @@ import tensorflow as tf
 from keras.layers import Dense
 from keras import Input
 from keras.layers import ZeroPadding2D, Conv2D, BatchNormalization, ReLU, MaxPooling2D, Add, \
-    GlobalAveragePooling2D
+    GlobalAveragePooling2D, Flatten
 
 
 def generate_resnet50(image_size, include_top=True, classes=1000):
@@ -109,6 +109,7 @@ def generate_resnet50(image_size, include_top=True, classes=1000):
 
     # add the dense layer
     if include_top:
+        x = Flatten()(x)
         x = Dense(classes, activation='relu')(x)
 
     return tf.keras.models.Model(i, x)
